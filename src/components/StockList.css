@@ -1,0 +1,80 @@
+.no-stock-msg {
+   margin-top: 3rem;
+  padding-top: 1rem;
+  background-color: rgba(255,255,255,0.85);
+  border-radius: 25px;
+  padding: 25px 30px 25px 30px;
+}
+
+.no-stock-msg p {
+   font-size: 14px;
+}
+
+.stock-list {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  background-color: rgba(255,255,255,0.85);
+  border-radius: 25px;
+  padding: 25px 30px 40px 30px;
+}
+
+h2 {
+   letter-spacing: -0.3px;
+   margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+   text-transform: uppercase;
+  font-size: smaller;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+td {
+   font-size: 14px;
+}
+
+/* Hide mobile cards by default */
+.mobile-view {
+  display: none;
+}
+
+/* Cards styling */
+.stock-card {
+  background-color: rgba(255,255,255,0.85);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 0.8em;
+}
+
+.stock-card strong{
+  text-transform: lowercase;
+  font-weight: 300;
+}
+
+/* Show cards on small screens, hide table */
+@media (max-width: 768px) {
+  .desktop-view {
+    display: none;
+  }
+
+  .mobile-view {
+    display: block;
+  }
+}
