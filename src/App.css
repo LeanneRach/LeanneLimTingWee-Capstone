@@ -3,11 +3,17 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: left;
-  background-color: #f9f9f9;
+  background-color: #f6f6f6;
+}
+
+body {
+  background-color: #f6f6f6;
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2.8em;
+  margin-bottom: 1em;
+  margin-left: 5px;
 }
 
 .logo {
@@ -44,4 +50,27 @@ h1 {
 
 .read-the-docs {
   color: #888;
+}
+
+/* Mobile version */
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 3.5em;
+    align-items: stretch;
+  }
+
+  body {
+    padding-bottom: 30px;
+  }
+
+  .stock-form input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .stock-list {
+    padding: 10px;
+    font-size: 14px;
+  }
 }

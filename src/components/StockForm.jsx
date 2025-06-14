@@ -1,15 +1,51 @@
 import React, { useState } from 'react';
-import './StockForm.css'; // optional: for CSS styling
+import './StockForm.css';
 
-const StockForm = () => {
+const StockForm = ({ onAddStock }) => {
   const [stockSymbol, setStockSymbol] = useState('');
   const [quantity, setQuantity] = useState('');
   const [purchasePrice, setPurchasePrice] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // For now, just log the data — you’ll integrate this later
-    console.log('Stock Data:', { stockSymbol, quantity, purchasePrice });
+    setError(''); // clear previous errors
+
+    const apiKey = 'cc6a5dd8d1dc9c9dd3c40312';
+    const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const globalQuote = data['Global Quote'];
+
+      if (!globalQuote || !globalQuote['05. price']) {
+        throw new Error('Invalid stock symbol or API error.');
+      }
+
+      const latestPrice = parseFloat(globalQuote['05. price']);
+
+      const stockData = {
+        symbol: stockSymbol.toUpperCase(),
+        quantity: parseInt(quantity),
+        purchasePrice: parseFloat(purchasePrice),
+        latestPrice,
+      };
+
+      console.log('📊 Stock added:', stockData);
+      if (onAddStock) {
+        onAddStock(stockData); // send to parent component if needed
+      }
+
+      // Clear form
+      setStockSymbol('');
+      setQuantity('');
+      setPurchasePrice('');
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch stock data. Please check the symbol or try again later.');
+    }
   };
 
   return (
@@ -30,7 +66,6 @@ const StockForm = () => {
           type="number"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          placeholder="eg. 10"
           required
         />
       </div>
@@ -41,13 +76,11 @@ const StockForm = () => {
           step="0.01"
           value={purchasePrice}
           onChange={(e) => setPurchasePrice(e.target.value)}
-          placeholder="eg. 150.00"
           required
         />
-        </div>
-      <div>
-           <button type="submit">Add Stock</button>
-         </div>
+      </div>
+      <button type="submit">Add Stock</button>
+      {error && <p className="error">{error}</p>}
     </form>
   );
 };
